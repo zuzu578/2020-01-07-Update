@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC " -//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exhibition.project.BoardDao.AdminNoticeDao">
+	<insert id="AdminInsert">
+	insert into adminnotice(board_num,boardtopic,userid,board_comment,nClick,bGroup,bStep,bIndent)
+	values(board_seq.nextval, #{param1},#{param2},#{param3},0,board_seq.currval,0,0)
+	
+	
+	
+	
+	</insert>
+	<select id="AdaoPagelist" resultType="com.exhibition.project.BoardDto.AdminNoticeDto">
+	select * from(
+
+	select row_number() over(order by a.rdate desc) num,a.* from adminnotice a)
+	where num between #{param1} and #{param2}
+	
+	</select>
+	<select id="board_view" resultType="com.exhibition.project.BoardDto.AdminNoticeDto">
+	select userid,boardtopic,board_comment,rdate,nclick,board_num from adminnotice where board_num=#{param1}
+	
+	
+	</select>
+	<update id="Doboard_update">
+	update adminnotice set userid=#{param2},boardtopic=#{param3},board_comment=#{param4} where board_num=#{param1}
+	
+	</update>
+	
+	<update id="upHit">
+	update adminnotice set nClick=nClick+1 where board_num=#{param1}
+	
+	
+	</update>
+	 <delete id="Doboard_delete">
+	 delete from adminnotice where board_num=#{param1}
+	 
+	 </delete>
+</mapper>
